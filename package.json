@@ -1,0 +1,30 @@
+{
+  "name": "note-app",
+  "version": "1.0.0",
+  "description": "This app is an attempt to make a node.js backend with a REACT/Native mobile interface, and a GraphQL database.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon -r esm src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jorgealziro/note-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jorgealziro/note-app/issues"
+  },
+  "homepage": "https://github.com/jorgealziro/note-app#readme",
+  "dependencies": {
+    "esm": "^3.2.25",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/node": "^7.10.1",
+    "@babel/preset-env": "^7.10.2"
+  }
+}
