@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/jorgealziro/note-app#readme",
   "dependencies": {
+    "apollo-server-express": "^2.14.3",
     "esm": "^3.2.25",
     "express": "^4.17.1"
   },
