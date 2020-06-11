@@ -12,3 +12,18 @@ export async function deleteNote(parent, {id}, {models}) {
         return false;
     }
 }
+export async function updateNote(parent, {content, id},{models}) {
+    return await models.Note.findOneAndUpdate(
+        {
+            _id: id,
+        },
+        {
+            $set: {
+                content
+            }
+        },
+        {
+            new: true
+        }
+    );
+}
