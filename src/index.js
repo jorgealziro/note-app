@@ -1,35 +1,15 @@
 import express from 'express';
-import {ApolloServer, gql} from 'apollo-server-express';
+import {ApolloServer} from 'apollo-server-express';
+
 const models = require('./models');
 const db = require('./db');
+const typeDefs = require('./schema');
+
 require('dotenv').config();
 
 const port = process.env.port || 4000;
 const DB_HOST = process.env.DB_HOST;
 
-let notes = [
-    {id: '1', content: 'This is a note', author: 'JEN'},
-    {id: '2', content: 'This is another note', author: 'Aniston'},
-    {id: '3', content: 'Banana', author: 'Kong'}
-];
-
-const typeDefs = gql`
-    type Query {
-        hello: String!
-        notes: [Note!]!
-        note(id: ID!): Note!
-    }
-
-    type Note {
-        id: ID!
-        content: String!
-        author: String!
-    }
-
-    type Mutation {
-        newNote(content: String!): Note!
-    }
-    `;
 const resolvers = {
     Query: {
         hello: () => 'Hello World',
