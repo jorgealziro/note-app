@@ -1,6 +1,8 @@
 import {gql} from 'apollo-server-express';
 
 module.exports = gql`
+    scalar DateTime
+
     type Query {
         hello: String!
         notes: [Note!]!
@@ -11,6 +13,8 @@ module.exports = gql`
         id: ID!
         content: String!
         author: String!
+        createdAt: DateTime!
+        updatedAt: DateTime!
     }
 
     type Mutation {
