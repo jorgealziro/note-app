@@ -3,6 +3,15 @@ import {gql} from 'apollo-server-express';
 module.exports = gql`
     scalar DateTime
 
+    type User {
+        id: ID!
+        username: String!
+        email: String!
+        avatar: String
+        notes: [Note!]!
+
+    }
+
     type Query {
         hello: String!
         notes: [Note!]!
@@ -12,7 +21,7 @@ module.exports = gql`
     type Note {
         id: ID!
         content: String!
-        author: String!
+        author: User!
         createdAt: DateTime!
         updatedAt: DateTime!
     }
