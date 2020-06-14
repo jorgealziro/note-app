@@ -19,10 +19,13 @@
   "homepage": "https://github.com/jorgealziro/note-app#readme",
   "dependencies": {
     "apollo-server-express": "^2.14.3",
+    "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "graphql-iso-date": "^3.6.1",
+    "jsonwebtoken": "^8.5.1",
+    "md5": "^2.2.1",
     "mongoose": "^5.9.18"
   },
   "devDependencies": {
