@@ -55,7 +55,6 @@ export async function updateNote(parent, {content, id},{models, user}) {
         }
     );
 }
-
 export async function signUp(parent, {username, email, password}, {models}){
     email = email.trim().toLowerCase();
     const hashed = await bcrypt.hash(password, 10);
@@ -90,4 +89,42 @@ export async function signIn(parent, {username, email, password}, {models}){
     }
 
     return jwt.sign({id: user._id}, process.env.JWT_SECRET);
+}
+export async function toggleFavorite(parent, {id}, {models, user}){
+    if (!user) {
+        throw new AuthenticationError();
+    }
+    let noteCheck = await models.Note.findById(id);
+    const hasUser = noteCheck.favoritedBy.indexOf(user.id);
+    if (hasUser >= 0){
+        return await models.Note.findByIdAndUpdate(
+            id,
+            {
+                $pull: {
+                    favoritedBy: mongoose.Types.ObjectId(user.id)
+                },
+                $inc: {
+                    favoriteCount: -1
+                }
+            },
+            {
+                new: true
+            }
+        );
+    } else {
+        return await models.Note.findByIdAndUpdate(
+            id,
+            {
+                $pull: {
+                    favoritedBy: mongoose.Types.ObjectId(user.id)
+                },
+                $inc: {
+                    favoriteCount: 1
+                }
+            },
+            {
+                new: true
+            }
+        );
+    }
 }

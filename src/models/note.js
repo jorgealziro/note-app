@@ -7,10 +7,20 @@ const noteSchema = new mongoose.Schema(
             required: true
         },
         author: {
-            type: mongoose.Schema.Types.ObjectId,
+            type: String,
             ref: 'User',
             required: true
-        }
+        },
+        favoriteCount: {
+            type: Number,
+            default: 0
+        },
+        favoritedBy: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            }
+        ]
     },
     {
         timestamps: true
