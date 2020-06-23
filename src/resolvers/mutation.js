@@ -2,23 +2,45 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import {AuthenticationError, ForbiddenError} from 'apollo-server-express';
 import gravatar from '../utils/gravatar';
+import mongoose from 'mongoose';
 require('dotenv').config();
 
-export async function newNote(parent, args, {models}) {
+export async function newNote(parent, args, {models, user}) {
+    if (!user) {
+        throw new AuthenticationError('You must be signed in to create a note');
+    }
+
     return await models.Note.create({
         content: args.content,
-        author: 'Michael Scott'
+        author: mongoose.Types.ObjectId(user.id)
     });
 }
-export async function deleteNote(parent, {id}, {models}) {
+export async function deleteNote(parent, {id}, {models, user}) {
+    if (!user){
+        throw new AuthenticationError('You must be signed in to delete a note');
+    }
+    const note = await models.Note.findById(id);
+    if (note && String(note.author) !== user.id){
+        throw new ForbiddenError("You don't have permissions to delete the note");
+    }
+
     try {
-        await models.Note.findOneAndRemove({ _id: id});
+        await note.remove();
         return true;
     } catch (err) {
         return false;
     }
 }
-export async function updateNote(parent, {content, id},{models}) {
+export async function updateNote(parent, {content, id},{models, user}) {
+    if (!user){
+        throw new AuthenticationError('You must be signed in to update a note');
+    }
+
+    const note = await models.Note.findById(id);
+    if (note && String(note.author) !== user.id){
+        throw new ForbiddenError("You don't have permissions to update the note");
+    }
+
     return await models.Note.findOneAndUpdate(
         {
             _id: id,
@@ -33,6 +55,7 @@ export async function updateNote(parent, {content, id},{models}) {
         }
     );
 }
+
 export async function signUp(parent, {username, email, password}, {models}){
     email = email.trim().toLowerCase();
     const hashed = await bcrypt.hash(password, 10);

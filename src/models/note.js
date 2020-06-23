@@ -7,7 +7,8 @@ const noteSchema = new mongoose.Schema(
             required: true
         },
         author: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
             required: true
         }
     },
@@ -18,6 +19,3 @@ const noteSchema = new mongoose.Schema(
 
 const Note = mongoose.model('Note', noteSchema);
 module.exports = Note;
-
-
-
