@@ -8,8 +8,19 @@ const noteSchema = new mongoose.Schema(
         },
         author: {
             type: String,
+            ref: 'User',
             required: true
-        }
+        },
+        favoriteCount: {
+            type: Number,
+            default: 0
+        },
+        favoritedBy: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            }
+        ]
     },
     {
         timestamps: true
@@ -18,6 +29,3 @@ const noteSchema = new mongoose.Schema(
 
 const Note = mongoose.model('Note', noteSchema);
 module.exports = Note;
-
-
-
