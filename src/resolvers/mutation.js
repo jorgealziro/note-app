@@ -115,7 +115,7 @@ export async function toggleFavorite(parent, {id}, {models, user}){
         return await models.Note.findByIdAndUpdate(
             id,
             {
-                $pull: {
+                $push: {
                     favoritedBy: mongoose.Types.ObjectId(user.id)
                 },
                 $inc: {
